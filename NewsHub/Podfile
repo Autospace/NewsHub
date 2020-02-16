@@ -6,6 +6,8 @@ target 'NewsHub' do
   use_frameworks!
 
   # Pods for NewsHub
+  pod 'SwiftSoup'
+  pod 'FeedKit', '~> 9.0'
 
   target 'NewsHubTests' do
     inherit! :search_paths
