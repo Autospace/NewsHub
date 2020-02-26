@@ -38,7 +38,7 @@ class Network: NSObject {
                 completion(false)
                 return
             }
-            if contentType.hasPrefix("application/rss+xml") {
+            if contentType.hasPrefix("application/rss+xml") || contentType.hasPrefix("application/xml") {
                 completion(true)
             } else {
                 completion(false)

@@ -38,7 +38,9 @@ class HomeViewController: UIViewController {
                         dispatchGroup.enter()
                         network.detectRssFeed(by: url) {[weak self] (isRSS) in
                             if isRSS {
-                                self?.rssFeeds.append((link: url.absoluteString, title: try! element.text()))
+                                var title = (try? element.text()) ?? ""
+                                if title.isEmpty { title = url.absoluteString }
+                                self?.rssFeeds.append((link: url.absoluteString, title: title))
                             }
                             dispatchGroup.leave()
                         }
