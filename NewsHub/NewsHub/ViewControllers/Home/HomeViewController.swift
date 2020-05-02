@@ -29,25 +29,21 @@ class HomeViewController: UIViewController {
         let dispatchGroup = DispatchGroup()
         dispatchGroup.enter()
         network.getRSSPageOfSite(by: URL(string: "https://news.tut.by/rss.html")!) {[weak self] (htmlDocument) in
-            do {
-                let doc: Document = try SwiftSoup.parse(htmlDocument)
-                let elements = try doc.getAllElements()
-                
-                for element in elements {
-                    if element.hasAttr("href"), let link = try? element.attr("href"), let url = URL(string: link) {
-                        dispatchGroup.enter()
-                        network.detectRssFeed(by: url) {[weak self] (isRSS) in
-                            if isRSS {
-                                var title = (try? element.text()) ?? ""
-                                if title.isEmpty { title = url.absoluteString }
-                                self?.rssFeeds.append((link: url.absoluteString, title: title))
-                            }
-                            dispatchGroup.leave()
+            guard let doc = try? SwiftSoup.parse(htmlDocument), let elements = try? doc.getAllElements() else {
+                return
+            }
+            for element in elements {
+                if element.hasAttr("href"), let link = try? element.attr("href"), let url = URL(string: link) {
+                    dispatchGroup.enter()
+                    network.detectRssFeed(by: url) {[weak self] (isRSS) in
+                        if isRSS {
+                            var title = (try? element.text()) ?? ""
+                            if title.isEmpty { title = url.absoluteString }
+                            self?.rssFeeds.append((link: url.absoluteString, title: title))
                         }
+                        dispatchGroup.leave()
                     }
                 }
-            } catch {
-                
             }
             dispatchGroup.leave()
         }
