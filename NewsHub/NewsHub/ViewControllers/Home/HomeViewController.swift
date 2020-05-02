@@ -26,10 +26,9 @@ class HomeViewController: UIViewController {
 
     private func loadRSSFeeds() {
         let rssService = RssService()
-        let dateTime = Date()
-        
         let operationQueue = OperationQueue()
         operationQueue.maxConcurrentOperationCount = 3
+        
         rssService.getRSSPageOfSite(by: URL(string: "https://news.tut.by/rss.html")!) {[weak self] (htmlDocument) in
             guard let doc = try? SwiftSoup.parse(htmlDocument), let elements = try? doc.getAllElements(), let strongSelf = self else {
                 return
@@ -51,7 +50,6 @@ class HomeViewController: UIViewController {
                 }
             }
             operationQueue.waitUntilAllOperationsAreFinished()
-            print(Date().timeIntervalSince(dateTime))
             DispatchQueue.main.async {
                 strongSelf.showRssFeeds()
             }
