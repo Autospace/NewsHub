@@ -25,17 +25,17 @@ class HomeViewController: UIViewController {
     }
 
     private func loadRSSFeeds() {
-        let network = Network()
+        let rssService = RssService()
         let dispatchGroup = DispatchGroup()
         dispatchGroup.enter()
-        network.getRSSPageOfSite(by: URL(string: "https://news.tut.by/rss.html")!) {[weak self] (htmlDocument) in
+        rssService.getRSSPageOfSite(by: URL(string: "https://news.tut.by/rss.html")!) {[weak self] (htmlDocument) in
             guard let doc = try? SwiftSoup.parse(htmlDocument), let elements = try? doc.getAllElements() else {
                 return
             }
             for element in elements {
                 if element.hasAttr("href"), let link = try? element.attr("href"), let url = URL(string: link) {
                     dispatchGroup.enter()
-                    network.detectRssFeed(by: url) {[weak self] (isRSS) in
+                    rssService.detectRssFeed(by: url) {[weak self] (isRSS) in
                         if isRSS {
                             var title = (try? element.text()) ?? ""
                             if title.isEmpty { title = url.absoluteString }

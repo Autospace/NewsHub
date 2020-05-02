@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Network: NSObject {
+class RssService: NSObject {
     
     func getRSSPageOfSite(by url: URL, completion: @escaping (_ htmlDocument: String) -> Void) {
         let session = URLSession(configuration: .ephemeral)
