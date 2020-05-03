@@ -25,34 +25,34 @@ class HomeViewController: UIViewController {
     }
 
     private func loadRSSFeeds() {
-        let network = Network()
-        let dispatchGroup = DispatchGroup()
-        dispatchGroup.enter()
-        network.getRSSPageOfSite(by: URL(string: "https://news.tut.by/rss.html")!) {[weak self] (htmlDocument) in
-            do {
-                let doc: Document = try SwiftSoup.parse(htmlDocument)
-                let elements = try doc.getAllElements()
-                
-                for element in elements {
-                    if element.hasAttr("href"), let link = try? element.attr("href"), let url = URL(string: link) {
-                        dispatchGroup.enter()
-                        network.detectRssFeed(by: url) {[weak self] (isRSS) in
-                            if isRSS {
-                                var title = (try? element.text()) ?? ""
-                                if title.isEmpty { title = url.absoluteString }
-                                self?.rssFeeds.append((link: url.absoluteString, title: title))
-                            }
-                            dispatchGroup.leave()
+        let rssService = RssService()
+        let operationQueue = OperationQueue()
+        operationQueue.maxConcurrentOperationCount = 3
+        
+        rssService.getRSSPageOfSite(by: URL(string: "https://news.tut.by/rss.html")!) {[weak self] (htmlDocument) in
+            guard let doc = try? SwiftSoup.parse(htmlDocument), let elements = try? doc.getAllElements(), let strongSelf = self else {
+                return
+            }
+            for element in elements {
+                if element.hasAttr("href"), let link = try? element.attr("href"), let url = URL(string: link) {
+                    let operation = DetectRssOperation(url: url, rssService: rssService)
+                    operation.completionBlock = {
+                        guard let isRSS = operation.isRSS else {
+                            return
+                        }
+                        if isRSS {
+                            var title = (try? element.text()) ?? ""
+                            if title.isEmpty { title = url.absoluteString }
+                            strongSelf.rssFeeds.append((link: url.absoluteString, title: title))
                         }
                     }
+                    operationQueue.addOperation(operation)
                 }
-            } catch {
-                
             }
-            dispatchGroup.leave()
-        }
-        dispatchGroup.notify(queue: .main) { [weak self] in
-            self?.showRssFeeds()
+            operationQueue.waitUntilAllOperationsAreFinished()
+            DispatchQueue.main.async {
+                strongSelf.showRssFeeds()
+            }
         }
     }
     
