@@ -11,7 +11,8 @@ import SwiftSoup
 
 class HomeViewController: UIViewController {
     @IBOutlet private var tableView: UITableView!
-    
+    @IBOutlet private var progressView: UIProgressView!
+
     private var rssFeeds: [(link: String, title: String)] = []
     private var cellIdentifier = "DefaultCell"
     private let screenTitle = "TUT.BY feeds"
@@ -23,12 +24,14 @@ class HomeViewController: UIViewController {
         tableView.delegate = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellIdentifier)
         configureRefreshControl()
+        progressView.isHidden = true
         loadRSSFeeds()
     }
 
     private func loadRSSFeeds() {
         let rssService = RssService()
-        //TODO: implement to show progress for the user
+        progressView.isHidden = false
+        progressView.progress = 0.0
         rssService.getRSSPageOfSite(by: URL(string: "https://news.tut.by/rss.html")!) {[weak self] (htmlDocument) in
             guard let doc = try? SwiftSoup.parse(htmlDocument), let elements = try? doc.getAllElements(), let strongSelf = self else {
                 return
@@ -37,6 +40,7 @@ class HomeViewController: UIViewController {
             operationQueue.qualityOfService = .userInteractive
             operationQueue.maxConcurrentOperationCount = 3
             var numberOfRssFeeds = 0
+            var numberOfCheckedElements = 0
             for element in elements {
                 if element.hasAttr("href"), let link = try? element.attr("href"), let url = URL(string: link) {
                     let operation = DetectRssOperation(url: url, rssService: rssService)
@@ -53,8 +57,17 @@ class HomeViewController: UIViewController {
                                 strongSelf.title = "Scanning... (\(numberOfRssFeeds)) RSS-feeds found"
                             }
                         }
+                        DispatchQueue.main.async {
+                            numberOfCheckedElements += 1
+                            strongSelf.progressView.progress = Float(numberOfCheckedElements) / Float(elements.count)
+                        }
                     }
                     operationQueue.addOperation(operation)
+                } else {
+                    DispatchQueue.main.async {
+                        numberOfCheckedElements += 1
+                        strongSelf.progressView.progress = Float(numberOfCheckedElements) / Float(elements.count)
+                    }
                 }
             }
             operationQueue.waitUntilAllOperationsAreFinished()
@@ -62,6 +75,7 @@ class HomeViewController: UIViewController {
                 strongSelf.title = strongSelf.screenTitle
                 strongSelf.tableView.refreshControl?.endRefreshing()
                 strongSelf.showRssFeeds()
+                strongSelf.progressView.isHidden = true
             }
         }
     }
