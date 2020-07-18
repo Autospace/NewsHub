@@ -14,25 +14,29 @@ class HomeViewController: UIViewController {
     
     private var rssFeeds: [(link: String, title: String)] = []
     private var cellIdentifier = "DefaultCell"
+    private let screenTitle = "TUT.BY feeds"
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "TUT.BY feeds"
+        title = screenTitle
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellIdentifier)
+        configureRefreshControl()
         loadRSSFeeds()
     }
 
     private func loadRSSFeeds() {
         let rssService = RssService()
-        let operationQueue = OperationQueue()
-        operationQueue.maxConcurrentOperationCount = 3
-        
+        //TODO: implement to show progress for the user
         rssService.getRSSPageOfSite(by: URL(string: "https://news.tut.by/rss.html")!) {[weak self] (htmlDocument) in
             guard let doc = try? SwiftSoup.parse(htmlDocument), let elements = try? doc.getAllElements(), let strongSelf = self else {
                 return
             }
+            let operationQueue = OperationQueue()
+            operationQueue.qualityOfService = .userInteractive
+            operationQueue.maxConcurrentOperationCount = 3
+            var numberOfRssFeeds = 0
             for element in elements {
                 if element.hasAttr("href"), let link = try? element.attr("href"), let url = URL(string: link) {
                     let operation = DetectRssOperation(url: url, rssService: rssService)
@@ -44,6 +48,10 @@ class HomeViewController: UIViewController {
                             var title = (try? element.text()) ?? ""
                             if title.isEmpty { title = url.absoluteString }
                             strongSelf.rssFeeds.append((link: url.absoluteString, title: title))
+                            DispatchQueue.main.async {
+                                numberOfRssFeeds += 1
+                                strongSelf.title = "Scanning... (\(numberOfRssFeeds)) RSS-feeds found"
+                            }
                         }
                     }
                     operationQueue.addOperation(operation)
@@ -51,17 +59,24 @@ class HomeViewController: UIViewController {
             }
             operationQueue.waitUntilAllOperationsAreFinished()
             DispatchQueue.main.async {
+                strongSelf.title = strongSelf.screenTitle
+                strongSelf.tableView.refreshControl?.endRefreshing()
                 strongSelf.showRssFeeds()
             }
         }
     }
     
-    @IBAction private func onLoadRSS() {
-        loadRSSFeeds()
-    }
-    
     private func showRssFeeds() {
         tableView.reloadData()
+    }
+
+    private func configureRefreshControl() {
+        tableView.refreshControl = UIRefreshControl()
+        tableView.refreshControl?.addTarget(self, action: #selector(handleRefreshControl), for: .valueChanged)
+    }
+
+    @objc func handleRefreshControl() {
+        loadRSSFeeds()
     }
 }
 
@@ -72,6 +87,7 @@ extension HomeViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier) {
+            cell.textLabel?.numberOfLines = 0
             cell.textLabel?.text = rssFeeds[indexPath.row].title
             cell.accessoryType = .disclosureIndicator
             return cell
