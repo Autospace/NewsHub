@@ -30,10 +30,7 @@
                                 </prototypes>
                             </tableView>
                             <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="veX-pT-DSL">
-                                <rect key="frame" x="0.0" y="44" width="414" height="5"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="5" id="bFq-Nc-S4D"/>
-                                </constraints>
+                                <rect key="frame" x="0.0" y="44" width="414" height="2"/>
                             </progressView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
