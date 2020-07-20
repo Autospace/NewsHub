@@ -9,11 +9,16 @@
 import UIKit
 import SwiftSoup
 
+struct Feed {
+    var title: String
+    var link: String
+}
+
 class HomeViewController: UIViewController {
     @IBOutlet private var tableView: UITableView!
     @IBOutlet private var progressView: UIProgressView!
 
-    private var rssFeeds: [(link: String, title: String)] = []
+    private var rssFeeds: [Feed] = []
     private var cellIdentifier = "DefaultCell"
     private let screenTitle = "TUT.BY feeds"
 
@@ -51,7 +56,7 @@ class HomeViewController: UIViewController {
                         if isRSS {
                             var title = (try? element.text()) ?? ""
                             if title.isEmpty { title = url.absoluteString }
-                            strongSelf.rssFeeds.append((link: url.absoluteString, title: title))
+                            strongSelf.rssFeeds.append(Feed(title: title, link: url.absoluteString))
                             DispatchQueue.main.async {
                                 numberOfRssFeeds += 1
                                 strongSelf.title = "Scanning... (\(numberOfRssFeeds)) RSS-feeds found"
@@ -115,7 +120,8 @@ extension HomeViewController: UITableViewDataSource {
 
 extension HomeViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // TODO: implement functionality to load rss content for selected feed
-        print(rssFeeds[indexPath.row].link)
+        let controller: FeedViewController = .instantiateFromStoryboard()
+        controller.feed = rssFeeds[indexPath.row]
+        navigationController?.pushViewController(controller, animated: true)
     }
 }
