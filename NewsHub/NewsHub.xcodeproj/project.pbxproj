@@ -26,6 +26,8 @@
 		5F46F96D23FB42E9001DD090 /* UIStoryboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F46F96C23FB42E9001DD090 /* UIStoryboard.swift */; };
 		5F5EB60D245E0FB000B24B13 /* AsyncOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F5EB60C245E0FB000B24B13 /* AsyncOperation.swift */; };
 		5F5EB60F245E127500B24B13 /* DetectRssOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F5EB60E245E127500B24B13 /* DetectRssOperation.swift */; };
+		5FC270EA24C6460D00DA1DBD /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FC270E924C6460D00DA1DBD /* FeedViewController.swift */; };
+		5FC270EC24C6464500DA1DBD /* Feed.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FC270EB24C6464500DA1DBD /* Feed.storyboard */; };
 		5FDE6858240475D600C44A3B /* RssService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDE6857240475D600C44A3B /* RssService.swift */; };
 		A87912BAF211979B1C41C029 /* Pods_NewsHub_NewsHubUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 840CDD4B7B3B435C6FDCB09D /* Pods_NewsHub_NewsHubUITests.framework */; };
 		E9C04AAA3B84D631C39557DC /* Pods_NewsHub.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B33CD352DC0AB30CD37ADBCF /* Pods_NewsHub.framework */; };
@@ -76,6 +78,8 @@
 		5F46F96C23FB42E9001DD090 /* UIStoryboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStoryboard.swift; sourceTree = "<group>"; };
 		5F5EB60C245E0FB000B24B13 /* AsyncOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncOperation.swift; sourceTree = "<group>"; };
 		5F5EB60E245E127500B24B13 /* DetectRssOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectRssOperation.swift; sourceTree = "<group>"; };
+		5FC270E924C6460D00DA1DBD /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
+		5FC270EB24C6464500DA1DBD /* Feed.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Feed.storyboard; sourceTree = "<group>"; };
 		5FDE6857240475D600C44A3B /* RssService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RssService.swift; sourceTree = "<group>"; };
 		65768339AF21836C23C0503B /* Pods-NewsHub-NewsHubUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NewsHub-NewsHubUITests.debug.xcconfig"; path = "Target Support Files/Pods-NewsHub-NewsHubUITests/Pods-NewsHub-NewsHubUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		7F047E8B439FB97B44796528 /* Pods-NewsHub.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NewsHub.debug.xcconfig"; path = "Target Support Files/Pods-NewsHub/Pods-NewsHub.debug.xcconfig"; sourceTree = "<group>"; };
@@ -195,6 +199,7 @@
 		5F46F95A23FB39A9001DD090 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				5FC270E824C645DD00DA1DBD /* Feed */,
 				5F46F97123FB5C0B001DD090 /* More */,
 				5F46F97023FB5BF8001DD090 /* Favorites */,
 				5F46F96F23FB5BE6001DD090 /* Home */,
@@ -266,6 +271,15 @@
 				5F5EB60E245E127500B24B13 /* DetectRssOperation.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		5FC270E824C645DD00DA1DBD /* Feed */ = {
+			isa = PBXGroup;
+			children = (
+				5FC270E924C6460D00DA1DBD /* FeedViewController.swift */,
+				5FC270EB24C6464500DA1DBD /* Feed.storyboard */,
+			);
+			path = Feed;
 			sourceTree = "<group>";
 		};
 		5FDE6856240475A100C44A3B /* Networking */ = {
@@ -386,6 +400,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5F46F95C23FB3A38001DD090 /* TabBar.storyboard in Resources */,
+				5FC270EC24C6464500DA1DBD /* Feed.storyboard in Resources */,
 				5F46F96623FB4041001DD090 /* More.storyboard in Resources */,
 				5F0B2DB623F5BD1500087812 /* LaunchScreen.storyboard in Resources */,
 				5F0B2DB323F5BD1500087812 /* Assets.xcassets in Resources */,
@@ -529,6 +544,7 @@
 				5F46F95E23FB3A74001DD090 /* TabBarController.swift in Sources */,
 				5F46F96D23FB42E9001DD090 /* UIStoryboard.swift in Sources */,
 				5F46F96223FB3FBD001DD090 /* FavoritesViewController.swift in Sources */,
+				5FC270EA24C6460D00DA1DBD /* FeedViewController.swift in Sources */,
 				5F0B2DA923F5BD1000087812 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

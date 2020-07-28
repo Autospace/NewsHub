@@ -9,30 +9,43 @@
 import UIKit
 import SwiftSoup
 
+struct Feed {
+    var title: String
+    var link: String
+}
+
 class HomeViewController: UIViewController {
     @IBOutlet private var tableView: UITableView!
-    
-    private var rssFeeds: [(link: String, title: String)] = []
+    @IBOutlet private var progressView: UIProgressView!
+
+    private var rssFeeds: [Feed] = []
     private var cellIdentifier = "DefaultCell"
+    private let screenTitle = "TUT.BY feeds"
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "TUT.BY feeds"
+        title = screenTitle
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellIdentifier)
+        configureRefreshControl()
+        progressView.isHidden = true
         loadRSSFeeds()
     }
 
     private func loadRSSFeeds() {
         let rssService = RssService()
-        let operationQueue = OperationQueue()
-        operationQueue.maxConcurrentOperationCount = 3
-        
+        progressView.isHidden = false
+        progressView.progress = 0.0
         rssService.getRSSPageOfSite(by: URL(string: "https://news.tut.by/rss.html")!) {[weak self] (htmlDocument) in
             guard let doc = try? SwiftSoup.parse(htmlDocument), let elements = try? doc.getAllElements(), let strongSelf = self else {
                 return
             }
+            let operationQueue = OperationQueue()
+            operationQueue.qualityOfService = .userInteractive
+            operationQueue.maxConcurrentOperationCount = 3
+            var numberOfRssFeeds = 0
+            var numberOfCheckedElements = 0
             for element in elements {
                 if element.hasAttr("href"), let link = try? element.attr("href"), let url = URL(string: link) {
                     let operation = DetectRssOperation(url: url, rssService: rssService)
@@ -43,25 +56,46 @@ class HomeViewController: UIViewController {
                         if isRSS {
                             var title = (try? element.text()) ?? ""
                             if title.isEmpty { title = url.absoluteString }
-                            strongSelf.rssFeeds.append((link: url.absoluteString, title: title))
+                            strongSelf.rssFeeds.append(Feed(title: title, link: url.absoluteString))
+                            DispatchQueue.main.async {
+                                numberOfRssFeeds += 1
+                                strongSelf.title = "Scanning... (\(numberOfRssFeeds)) RSS-feeds found"
+                            }
+                        }
+                        DispatchQueue.main.async {
+                            numberOfCheckedElements += 1
+                            strongSelf.progressView.progress = Float(numberOfCheckedElements) / Float(elements.count)
                         }
                     }
                     operationQueue.addOperation(operation)
+                } else {
+                    DispatchQueue.main.async {
+                        numberOfCheckedElements += 1
+                        strongSelf.progressView.progress = Float(numberOfCheckedElements) / Float(elements.count)
+                    }
                 }
             }
             operationQueue.waitUntilAllOperationsAreFinished()
             DispatchQueue.main.async {
+                strongSelf.title = strongSelf.screenTitle
+                strongSelf.tableView.refreshControl?.endRefreshing()
                 strongSelf.showRssFeeds()
+                strongSelf.progressView.isHidden = true
             }
         }
     }
     
-    @IBAction private func onLoadRSS() {
-        loadRSSFeeds()
-    }
-    
     private func showRssFeeds() {
         tableView.reloadData()
+    }
+
+    private func configureRefreshControl() {
+        tableView.refreshControl = UIRefreshControl()
+        tableView.refreshControl?.addTarget(self, action: #selector(handleRefreshControl), for: .valueChanged)
+    }
+
+    @objc func handleRefreshControl() {
+        loadRSSFeeds()
     }
 }
 
@@ -72,6 +106,7 @@ extension HomeViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier) {
+            cell.textLabel?.numberOfLines = 0
             cell.textLabel?.text = rssFeeds[indexPath.row].title
             cell.accessoryType = .disclosureIndicator
             return cell
@@ -85,7 +120,8 @@ extension HomeViewController: UITableViewDataSource {
 
 extension HomeViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // TODO: implement functionality to load rss content for selected feed
-        print(rssFeeds[indexPath.row].link)
+        let controller: FeedViewController = .instantiateFromStoryboard()
+        controller.feed = rssFeeds[indexPath.row]
+        navigationController?.pushViewController(controller, animated: true)
     }
 }
