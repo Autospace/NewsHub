@@ -43,7 +43,7 @@ class HomeViewController: UIViewController {
             }
             let operationQueue = OperationQueue()
             operationQueue.qualityOfService = .userInteractive
-            operationQueue.maxConcurrentOperationCount = 3
+            operationQueue.maxConcurrentOperationCount = 7
             var numberOfRssFeeds = 0
             var numberOfCheckedElements = 0
             for element in elements {
