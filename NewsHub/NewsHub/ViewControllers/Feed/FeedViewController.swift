@@ -31,26 +31,29 @@ class FeedViewController: UIViewController {
         guard let feedUrlString = feed?.link, let feedUrl = URL(string: feedUrlString) else {
             return
         }
-        
+
         let parser = FeedParser(URL: feedUrl)
         parser.parseAsync(queue: DispatchQueue.global(qos: .userInitiated)) {[weak self] (result) in
+            guard let self = self else {
+                return
+            }
             switch result {
             case .success(let feed):
                 DispatchQueue.main.async {
                     switch feed {
-                    case .atom(let atomFeed):
-                        print("atom feed: \(atomFeed)")
+                    case .atom:
+                        assertionFailure("Need to implement functionality to work with atom feed")
                     case .rss(let rssFeed):
                         if let items = rssFeed.items {
-                            self?.rssFeedItems = items
-                            self?.tableView.reloadData()
+                            self.rssFeedItems = items
+                            self.tableView.reloadData()
                         }
-                    case .json(let jsonFeed):
-                        print("json feed: \(jsonFeed)")
+                    case .json:
+                        assertionFailure("Need to implement functionality to work with JSON feed")
                     }
                 }
             case .failure(let error):
-                print("Parse error: \(error.localizedDescription)")
+                assertionFailure("\(error.localizedDescription)")
             }
         }
     }
