@@ -1,13 +1,13 @@
 {
   "images" : [
     {
-      "filename" : "Webp.net-resizeimage.png",
+      "filename" : "40x40.png",
       "idiom" : "iphone",
       "scale" : "2x",
       "size" : "20x20"
     },
     {
-      "filename" : "Webp.net-resizeimage-1.png",
+      "filename" : "60x60.png",
       "idiom" : "iphone",
       "scale" : "3x",
       "size" : "20x20"
@@ -73,7 +73,7 @@
       "size" : "29x29"
     },
     {
-      "filename" : "40x40.png",
+      "filename" : "40x40-2.png",
       "idiom" : "ipad",
       "scale" : "1x",
       "size" : "40x40"
@@ -103,7 +103,7 @@
       "size" : "83.5x83.5"
     },
     {
-      "filename" : "NewsHubIcon.png",
+      "filename" : "NewsHubOrange.png",
       "idiom" : "ios-marketing",
       "scale" : "1x",
       "size" : "1024x1024"
