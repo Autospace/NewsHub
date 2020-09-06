@@ -14,7 +14,7 @@
 		5F0B2DB123F5BD1000087812 /* NewsHub.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5F0B2DAF23F5BD1000087812 /* NewsHub.xcdatamodeld */; };
 		5F0B2DB323F5BD1500087812 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5F0B2DB223F5BD1500087812 /* Assets.xcassets */; };
 		5F0B2DB623F5BD1500087812 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F0B2DB423F5BD1500087812 /* LaunchScreen.storyboard */; };
-		5F0B2DC123F5BD1500087812 /* NewsHubTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F0B2DC023F5BD1500087812 /* NewsHubTests.swift */; };
+		5F0B2DC123F5BD1500087812 /* RssServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F0B2DC023F5BD1500087812 /* RssServiceTests.swift */; };
 		5F0B2DCC23F5BD1500087812 /* NewsHubUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F0B2DCB23F5BD1500087812 /* NewsHubUITests.swift */; };
 		5F46F95C23FB3A38001DD090 /* TabBar.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F46F95B23FB3A38001DD090 /* TabBar.storyboard */; };
 		5F46F95E23FB3A74001DD090 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F46F95D23FB3A74001DD090 /* TabBarController.swift */; };
@@ -63,7 +63,7 @@
 		5F0B2DB523F5BD1500087812 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5F0B2DB723F5BD1500087812 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5F0B2DBC23F5BD1500087812 /* NewsHubTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NewsHubTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		5F0B2DC023F5BD1500087812 /* NewsHubTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsHubTests.swift; sourceTree = "<group>"; };
+		5F0B2DC023F5BD1500087812 /* RssServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RssServiceTests.swift; sourceTree = "<group>"; };
 		5F0B2DC223F5BD1500087812 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5F0B2DC723F5BD1500087812 /* NewsHubUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NewsHubUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F0B2DCB23F5BD1500087812 /* NewsHubUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsHubUITests.swift; sourceTree = "<group>"; };
@@ -181,7 +181,7 @@
 		5F0B2DBF23F5BD1500087812 /* NewsHubTests */ = {
 			isa = PBXGroup;
 			children = (
-				5F0B2DC023F5BD1500087812 /* NewsHubTests.swift */,
+				5F0B2DC023F5BD1500087812 /* RssServiceTests.swift */,
 				5F0B2DC223F5BD1500087812 /* Info.plist */,
 			);
 			path = NewsHubTests;
@@ -553,7 +553,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5F0B2DC123F5BD1500087812 /* NewsHubTests.swift in Sources */,
+				5F0B2DC123F5BD1500087812 /* RssServiceTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
