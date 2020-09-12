@@ -3,21 +3,12 @@ name: CI
 on: [push]
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v2
-    - name: Run a one-line script
-      run: echo Hello, world!
-    - name: Run a multi-line script
-      run: |
-        echo Add other actions to build,
-        echo test, and deploy your project.
   test:
     name: Testing iOS app
     runs-on: macOS-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
       - name: Force XCode 11.7
         run: sudo xcode-select -switch /Applications/Xcode_11.7.app
       - name: Testing iOS app
