@@ -20,5 +20,7 @@ jobs:
     steps:
       - name: Force XCode 11.7
         run: sudo xcode-select -switch /Applications/Xcode_11.7.app
+      - name: Print list of files
+        run: ls -lh
       - name: Testing iOS app
         run: exec ./CI/scripts/test_app.sh
