@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 set -eo pipefail
 
 xcodebuild -workspace NewsHub.workspace \
