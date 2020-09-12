@@ -4,7 +4,6 @@ on: [push]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -15,3 +14,11 @@ jobs:
       run: |
         echo Add other actions to build,
         echo test, and deploy your project.
+  test:
+    name: Testing iOS app
+    runs-on: macOS-latest
+    steps:
+      - name: Force XCode 11.7
+        run: sudo xcode-select -switch /Applications/Xcode_11.7.app
+      - name: Testing iOS app
+        run: exec ./test_app.sh
