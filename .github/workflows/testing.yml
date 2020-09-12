@@ -21,4 +21,4 @@ jobs:
       - name: Force XCode 11.7
         run: sudo xcode-select -switch /Applications/Xcode_11.7.app
       - name: Testing iOS app
-        run: exec ./test_app.sh
+        run: exec ./.github/workflows/test_app.sh
