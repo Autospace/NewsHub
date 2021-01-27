@@ -33,11 +33,10 @@ class RssService: NSObject {
     
     func detectRssFeed(by url: URL, completion: @escaping (_ isRSS: Bool) -> Void) {
         // FIXME: need to update this method to use URLSession class' property instead of local in the method
-        let session = URLSession(configuration: .ephemeral)
-        let sessionCopy = session.copy() as! URLSession
+        //let session = URLSession(configuration: .ephemeral)
         var request = URLRequest(url: url)
         request.httpMethod = "Head"
-        let dataTask = sessionCopy.dataTask(with: request) { (data, response, error) in
+        let dataTask = session.dataTask(with: request) { (data, response, error) in
             guard let httpResponse = response as? HTTPURLResponse,
                 httpResponse.statusCode == 200,
                 let contentType = httpResponse.allHeaderFields["Content-Type"] as? String else {
