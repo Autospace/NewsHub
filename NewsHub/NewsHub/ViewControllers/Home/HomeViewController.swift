@@ -20,7 +20,7 @@ class HomeViewController: UIViewController {
 
     private var rssFeeds: [Feed] = []
     private var cellIdentifier = "DefaultCell"
-    private let screenTitle = "TUT.BY feeds"
+    private let screenTitle = "Devby feeds"
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,13 +37,13 @@ class HomeViewController: UIViewController {
         let rssService = RssService()
         progressView.isHidden = false
         progressView.progress = 0.0
-        rssService.getRSSPageOfSite(by: URL(string: "https://news.tut.by/rss.html")!) {[weak self] (htmlDocument) in
+        rssService.getRSSPageOfSite(by: URL(string: "https://devby.io/rss")!) {[weak self] (htmlDocument) in
             guard let doc = try? SwiftSoup.parse(htmlDocument), let elements = try? doc.getAllElements(), let self = self else {
                 return
             }
             let operationQueue = OperationQueue()
             operationQueue.qualityOfService = .userInteractive
-            operationQueue.maxConcurrentOperationCount = 7
+            operationQueue.maxConcurrentOperationCount = 1
             var numberOfRssFeeds = 0
             var numberOfCheckedElements = 0
             for element in elements {
