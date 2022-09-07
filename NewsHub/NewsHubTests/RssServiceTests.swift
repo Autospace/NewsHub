@@ -20,7 +20,7 @@ class RssServiceTests: XCTestCase {
     }
 
     func test_rssServiceGetPage() {
-        let url = URL(string: "https://news.tut.by/rss.html")!
+        let url = URL(string: "https://devby.io/rss")!
         service.getRSSPageOfSite(by: url) { (htmlDocument) in
             defer { self.expectation.fulfill() }
             XCTAssertNotEqual(htmlDocument, "")
@@ -50,7 +50,7 @@ class RssServiceTests: XCTestCase {
     }
 
     func test_rssServiceDetectValidRss() {
-        let url = URL(string: "https://news.tut.by/rss/index.rss")!
+        let url = URL(string: "https://devby.io/rss")!
         service.detectRssFeed(by: url) { (isRss) in
             defer { self.expectation.fulfill() }
             XCTAssertTrue(isRss)
@@ -59,7 +59,7 @@ class RssServiceTests: XCTestCase {
     }
 
     func test_rssServiceDetectInvalidRss() {
-        let url = URL(string: "https://tut.by")!
+        let url = URL(string: "https://devby.io")!
         service.detectRssFeed(by: url) { (isRss) in
             defer { self.expectation.fulfill() }
             XCTAssertFalse(isRss)
