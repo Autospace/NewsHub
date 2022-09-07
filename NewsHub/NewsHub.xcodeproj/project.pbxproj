@@ -14,7 +14,7 @@
 		5F0B2DB123F5BD1000087812 /* NewsHub.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5F0B2DAF23F5BD1000087812 /* NewsHub.xcdatamodeld */; };
 		5F0B2DB323F5BD1500087812 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5F0B2DB223F5BD1500087812 /* Assets.xcassets */; };
 		5F0B2DB623F5BD1500087812 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F0B2DB423F5BD1500087812 /* LaunchScreen.storyboard */; };
-		5F0B2DC123F5BD1500087812 /* NewsHubTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F0B2DC023F5BD1500087812 /* NewsHubTests.swift */; };
+		5F0B2DC123F5BD1500087812 /* RssServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F0B2DC023F5BD1500087812 /* RssServiceTests.swift */; };
 		5F0B2DCC23F5BD1500087812 /* NewsHubUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F0B2DCB23F5BD1500087812 /* NewsHubUITests.swift */; };
 		5F46F95C23FB3A38001DD090 /* TabBar.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F46F95B23FB3A38001DD090 /* TabBar.storyboard */; };
 		5F46F95E23FB3A74001DD090 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F46F95D23FB3A74001DD090 /* TabBarController.swift */; };
@@ -63,7 +63,7 @@
 		5F0B2DB523F5BD1500087812 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5F0B2DB723F5BD1500087812 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5F0B2DBC23F5BD1500087812 /* NewsHubTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NewsHubTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		5F0B2DC023F5BD1500087812 /* NewsHubTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsHubTests.swift; sourceTree = "<group>"; };
+		5F0B2DC023F5BD1500087812 /* RssServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RssServiceTests.swift; sourceTree = "<group>"; };
 		5F0B2DC223F5BD1500087812 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5F0B2DC723F5BD1500087812 /* NewsHubUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NewsHubUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F0B2DCB23F5BD1500087812 /* NewsHubUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsHubUITests.swift; sourceTree = "<group>"; };
@@ -181,7 +181,7 @@
 		5F0B2DBF23F5BD1500087812 /* NewsHubTests */ = {
 			isa = PBXGroup;
 			children = (
-				5F0B2DC023F5BD1500087812 /* NewsHubTests.swift */,
+				5F0B2DC023F5BD1500087812 /* RssServiceTests.swift */,
 				5F0B2DC223F5BD1500087812 /* Info.plist */,
 			);
 			path = NewsHubTests;
@@ -358,7 +358,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1130;
-				LastUpgradeCheck = 1130;
+				LastUpgradeCheck = 1220;
 				ORGANIZATIONNAME = MALX;
 				TargetAttributes = {
 					5F0B2DA223F5BD1000087812 = {
@@ -553,7 +553,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5F0B2DC123F5BD1500087812 /* NewsHubTests.swift in Sources */,
+				5F0B2DC123F5BD1500087812 /* RssServiceTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -626,6 +626,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -686,6 +687,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -758,7 +760,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 123D915063D6C339A5D4683C /* Pods-NewsHubTests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = S425E3PBRN;
@@ -781,7 +783,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B1D47E9495FE04CA79F66241 /* Pods-NewsHubTests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = S425E3PBRN;
@@ -804,7 +806,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 65768339AF21836C23C0503B /* Pods-NewsHub-NewsHubUITests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = S425E3PBRN;
 				INFOPLIST_FILE = NewsHubUITests/Info.plist;
@@ -825,7 +827,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C8EDCB17ABC7627285EEE5BB /* Pods-NewsHub-NewsHubUITests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = S425E3PBRN;
 				INFOPLIST_FILE = NewsHubUITests/Info.plist;

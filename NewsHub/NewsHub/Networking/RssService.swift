@@ -9,9 +9,13 @@
 import Foundation
 
 class RssService: NSObject {
+    let session: URLSession
+    
+    init(urlSession: URLSession = URLSession(configuration: .ephemeral)) {
+        session = urlSession
+    }
     
     func getRSSPageOfSite(by url: URL, completion: @escaping (_ htmlDocument: String) -> Void) {
-        let session = URLSession(configuration: .ephemeral)
         let dataTask = session.dataTask(with: url) { (data, response, error) in
             guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
                 completion("")
@@ -28,6 +32,7 @@ class RssService: NSObject {
     }
     
     func detectRssFeed(by url: URL, completion: @escaping (_ isRSS: Bool) -> Void) {
+        // FIXME: need to update this method to use URLSession class' property instead of local in the method
         let session = URLSession(configuration: .ephemeral)
         var request = URLRequest(url: url)
         request.httpMethod = "Head"
