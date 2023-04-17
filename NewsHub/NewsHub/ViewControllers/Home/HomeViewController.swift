@@ -56,7 +56,11 @@ class HomeViewController: UIViewController {
                         if isRSS {
                             var title = (try? element.text()) ?? ""
                             if title.isEmpty { title = url.absoluteString }
-                            self.rssFeeds.append(Feed(title: title, link: url.absoluteString))
+                            if !self.rssFeeds.contains(where: { feed in
+                                feed.link == url.absoluteString
+                            }) {
+                                self.rssFeeds.append(Feed(title: title, link: url.absoluteString))
+                            }
                             DispatchQueue.main.async {
                                 numberOfRssFeeds += 1
                                 self.title = "Scanning... (\(numberOfRssFeeds)) RSS-feeds found"
